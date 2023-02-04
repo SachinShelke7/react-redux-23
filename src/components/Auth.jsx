@@ -1,10 +1,8 @@
 import { auth } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
-  getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signOut,
 } from "firebase/auth";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -60,24 +58,28 @@ const Authentication = () => {
   });
 
   return (
-    <div className="flex flex-col min-w-screen h-screen justify-center items-center">
+    <div className="flex flex-col min-w-screen h-screen justify-center items-center px-2 sm:px-0">
       <div className="flex overflow-hidden max-w-[25rem]">
         <form
           onSubmit={signIn}
           className={`min-w-full transform transition-all duration-[1000ms] border border-green-500 rounded-md p-5 ${
-            tab ? "translate-x-0" : "-translate-x-full"
+            tab ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"
           }`}
         >
           <h2 className="text-center text-2xl font-serif pb-5">Sign In</h2>
+          <label htmlFor="email">Email </label>
           <input
             type="email"
+            name="email"
             value={email}
             placeholder="Email..."
             required
             onChange={(e) => setEmail(e.target.value)}
           />
+          <label htmlFor="password">Password </label>
           <input
             type="password"
+            name="password"
             value={password}
             placeholder="Password"
             required
@@ -91,19 +93,23 @@ const Authentication = () => {
         <form
           onSubmit={signUp}
           className={`min-w-full transform transition-all duration-[1000ms] border border-green-500 rounded-md p-5 ${
-            tab ? "translate-x-0" : "-translate-x-full"
+            tab ? "translate-x-0 opacity-0" : "-translate-x-full opacity-100"
           }`}
         >
           <h2 className="text-center text-2xl font-serif pb-5">Sign Up</h2>
+          <label htmlFor="email">Email </label>
           <input
             type="email"
+            name="email"
             value={email}
             placeholder="Email..."
             required
             onChange={(e) => setEmail(e.target.value)}
           />
+          <label htmlFor="password">Password </label>
           <input
             type="password"
+            name="password"
             value={password}
             placeholder="Password"
             required
