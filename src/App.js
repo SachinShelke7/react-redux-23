@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { getAuth, signOut } from "firebase/auth";
+import { useEffect } from "react";
+import useCookies from "react-cookie/cjs/useCookies";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 function App() {
+  const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const auth = getAuth();
+  const handleSignOut = async () => {
+    await signOut(auth);
+    removeCookie("token");
+  };
+  useEffect(() => {
+    if (!cookies.token) {
+      navigate("/login");
+    }
+  }, [cookies]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {cookies.token && (
+        <>
+          <button onClick={handleSignOut}>Sign Out</button>
+        </>
+      )}
     </div>
   );
 }
